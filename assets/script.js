@@ -33,9 +33,9 @@ showTime();
 function playGame() {
     startGameButtonEl.hide();
     quizClock = 60;
-    quizTimer();
     currentQuestion = 0;
-    showQuestion(currentQuestion);
+    quizTimer();
+    showQuestion();
 }
 
 function showTime() {
@@ -45,14 +45,16 @@ function showTime() {
         timerEl.text(":" + quizClock);
 }
 
-function showQuestion(questionIndex) {
-    questionsEl.html(arrQuestions[questionIndex].question + "<br><br>");
-    for (i = 0; i < arrQuestions[questionIndex].answers.length; i++) {
-        if (i == arrQuestions[questionIndex].correctAnswerIndex)
-            questionsEl.append(`<button class="answer" data-is-correct=true>${arrQuestions[questionIndex].answers[i]}</button><br>`);
+function showQuestion() {
+    resultEl.html("");
+    questionsEl.html(arrQuestions[currentQuestion].question + "<br><br>");
+    for (i = 0; i < arrQuestions[currentQuestion].answers.length; i++) {
+        if (i == arrQuestions[currentQuestion].correctAnswerIndex)
+            questionsEl.append(`<button class="answer" data-is-correct=true>${arrQuestions[currentQuestion].answers[i]}</button><br>`);
         else
-            questionsEl.append(`<button class="answer" data-is-correct=false>${arrQuestions[questionIndex].answers[i]}</button><br>`);
+            questionsEl.append(`<button class="answer" data-is-correct=false>${arrQuestions[currentQuestion].answers[i]}</button><br>`);
     }
+    currentQuestion++;
 }
 
 questionsEl.on("click", ".answer", function (event) {
@@ -69,11 +71,10 @@ questionsEl.on("click", ".answer", function (event) {
     }
 
     // Increment currentQuestion index and either end game or show next question
-    currentQuestion++;
     if (currentQuestion == arrQuestions.length)
-        endGame();
+        setTimeout(endGame, 250);
     else
-        showQuestion(currentQuestion);
+    setTimeout(showQuestion(), 250);
 });
 
 function quizTimer() {
@@ -104,16 +105,18 @@ function saveHighScore() {
         "date" : currentDate
     }
     var arrScores = [];
-    var i = 1;
-    while (localStorage.getItem(parseInt(i)) != null) {
-        console.log(localStorage.getItem(i));
-        i++;
+    var highestKey = 1;
+    while (localStorage.getItem(parseInt(highestKey)) != null) {
+        console.log(localStorage.getItem(highestKey));
+        highestKey++;
     }
     var scoreString = JSON.stringify(scoreObj);
-    localStorage.setItem("score", scoreString);
+    localStorage.setItem(highestKey.toString(), scoreString);
+    showHighScores();
 }
 
 function showHighScores() {
+    questionsEl.html("");
     var arrScores = [];
     var arrScoreElement = [];
     var i = 1;
