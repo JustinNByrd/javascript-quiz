@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Javascript Quiz</title>
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-    <button onClick="showHighScores();" id="showHighScores">Show High Scores</button><br>
-    <div id="quizClock"></div>
-    <div id="questions"></div>
-    <div id="result"></div>
-    <br><br>
-    <button onClick="playGame();" id="startGame">Start Game</button>
+    <header>
+        <h1>Javascript Quiz</h1>
+        <button onClick="showHighScores();" id="showHighScores">Show High Scores</button>
+        <div id="quizClock"></div>
+    </header>
+    <main>
+        <div id="intro">
+            <p>Welcome to my Javascript Quiz.  You will be asked multiple choice questions pertaining to Javascript.  An incorrect answer will result in losing time from the clock.  The quiz will be over once you have completed all questions or the clock runs out.  Your score will be the time on the clock when the game is completed.  Scores will be tracked and can be cleared.</p>
+        </div>
+        <div id="questions"></div>
+        <div id="result"></div>
+    </main>
+    <footer>
+        <button onClick="playGame();" id="startGame">Start Game</button>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="./assets/script.js"></script>
 </body>
