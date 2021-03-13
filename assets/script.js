@@ -2,6 +2,7 @@ var quizClock = 60;
 var timerEl = $("#quizClock");
 var questionsEl = $("#questions");
 var resultEl = $("#result");
+var introEl = $('#intro');
 var startGameButtonEl = $("#startGame");
 var currentQuestion = 0;
 var timerInterval;
@@ -32,6 +33,7 @@ showTime();
 
 function playGame() {
     startGameButtonEl.hide();
+    introEl.hide();
     quizClock = 60;
     currentQuestion = 0;
     quizTimer();
@@ -72,9 +74,9 @@ questionsEl.on("click", ".answer", function (event) {
 
     // Increment currentQuestion index and either end game or show next question
     if (currentQuestion == arrQuestions.length)
-        setTimeout(endGame, 250);
+        setTimeout(endGame, 400);
     else
-    setTimeout(showQuestion(), 250);
+        setTimeout(showQuestion, 400);
 });
 
 function quizTimer() {
@@ -88,10 +90,11 @@ function quizTimer() {
 
 function endGame() {
     clearInterval(timerInterval);
+    resultEl.html("");
     questionsEl.html(`<h1>Game Over</h1><h2>Your Score: ${quizClock}`);
     var htmlTxt = '<p>Please enter your initials <input type="text" id="initials" size=3 maxlength=3 onfocus="resultEl.html(\'\');"> <button id="saveScore" onclick="saveHighScore();">Save</button>';
     questionsEl.append(htmlTxt)
-    startGameButtonEl.text("Replay");
+    startGameButtonEl.text("Play Again");
     startGameButtonEl.show();
 }
 
@@ -117,11 +120,12 @@ function saveHighScore() {
 
 function showHighScores() {
     questionsEl.html("");
+    resultEl.html("");
+    introEl.hide();
     var arrScores = [];
     var arrScoreElement = [];
     var i = 1;
     while (localStorage.getItem(parseInt(i)) != null) {
-        console.log(localStorage.getItem(i));
         arrScoreElement = [i, JSON.parse(localStorage.getItem(i))];
         arrScores.push(arrScoreElement);
         i++;
@@ -157,4 +161,10 @@ function showHighScores() {
     }
     tableHTML += `</table>`;
     questionsEl.append(tableHTML);
+    questionsEl.append('<button onClick="clearScores();">Clear Scores</button><br><br>');
+}
+
+function clearScores() {
+    localStorage.clear();
+    showHighScores();
 }
