@@ -64,9 +64,13 @@ questionsEl.on("click", ".answer", function (event) {
     userAnswer.attr("disabled", "true");
     userAnswer.siblings().attr("disabled", "true");
     if (userAnswer.data("isCorrect") == true) {
+        resultEl.removeClass();
+        resultEl.addClass("green")
         resultEl.html("<hr>Correct!!!");
     }
     else {
+        resultEl.removeClass();
+        resultEl.addClass("red")
         resultEl.html("<hr>Incorrect!!!");
         quizClock -= 10;
         showTime();
@@ -91,7 +95,7 @@ function quizTimer() {
 function endGame() {
     clearInterval(timerInterval);
     resultEl.html("");
-    questionsEl.html(`<h1>Game Over</h1><h2>Your Score: ${quizClock}`);
+    questionsEl.html(`<h2>Game Over</h2><h3>Your Score: ${quizClock}</h3>`);
     var htmlTxt = '<p>Please enter your initials <input type="text" id="initials" size=3 maxlength=3 onfocus="resultEl.html(\'\');"> <button id="saveScore" onclick="saveHighScore();">Save</button>';
     questionsEl.append(htmlTxt)
     startGameButtonEl.text("Play Again");
