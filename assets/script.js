@@ -103,6 +103,55 @@ function saveHighScore() {
         "score" : quizClock,
         "date" : currentDate
     }
+    var arrScores = [];
+    var i = 1;
+    while (localStorage.getItem(parseInt(i)) != null) {
+        console.log(localStorage.getItem(i));
+        i++;
+    }
     var scoreString = JSON.stringify(scoreObj);
     localStorage.setItem("score", scoreString);
+}
+
+function showHighScores() {
+    var arrScores = [];
+    var arrScoreElement = [];
+    var i = 1;
+    while (localStorage.getItem(parseInt(i)) != null) {
+        console.log(localStorage.getItem(i));
+        arrScoreElement = [i, JSON.parse(localStorage.getItem(i))];
+        arrScores.push(arrScoreElement);
+        i++;
+    }
+    arrScores.sort(function(a, b) { return b[1].score - a[1].score });
+    var tableHTML = `<table>
+                        <tr>
+                            <th>
+                                Initials
+                            </th>
+                            <th>
+                                Score
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                        </tr>
+                    `;
+    for (var i=0; i<arrScores.length; i++) {
+        tableHTML += `
+                    <tr>
+                        <td>
+                            ${arrScores[i][1].initials}
+                        </td>
+                        <td>
+                            ${arrScores[i][1].score}
+                        </td>
+                        <td>
+                            ${arrScores[i][1].date}
+                        </td>
+                    </tr>
+                    `;
+    }
+    tableHTML += `</table>`;
+    questionsEl.append(tableHTML);
 }
