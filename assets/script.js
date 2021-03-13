@@ -49,7 +49,7 @@ function showTime() {
 
 function showQuestion() {
     resultEl.html("");
-    questionsEl.html(arrQuestions[currentQuestion].question + "<br><br>");
+    questionsEl.html("<br>" + arrQuestions[currentQuestion].question + "<br><br>");
     for (i = 0; i < arrQuestions[currentQuestion].answers.length; i++) {
         if (i == arrQuestions[currentQuestion].correctAnswerIndex)
             questionsEl.append(`<button class="answer" data-is-correct=true>${arrQuestions[currentQuestion].answers[i]}</button><br>`);
@@ -78,9 +78,9 @@ questionsEl.on("click", ".answer", function (event) {
 
     // Increment currentQuestion index and either end game or show next question
     if (currentQuestion == arrQuestions.length)
-        setTimeout(endGame, 400);
+        setTimeout(endGame, 500);
     else
-        setTimeout(showQuestion, 400);
+        setTimeout(showQuestion, 500);
 });
 
 function quizTimer() {

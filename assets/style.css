@@ -5,14 +5,15 @@ body {
     color: white;
 }
 
-header main footer {
+header, main, footer {
     max-width: 850px;
     margin: auto;
 }
 
-div:not(#quizClock) {
-    max-width: 850px;
+main div {
+    width: 100%;
     margin: auto;
+    display: inline-block;
 }
 
 @font-face {
@@ -20,18 +21,22 @@ div:not(#quizClock) {
     src: url(digital-7mono.ttf);
 }
 
+nav {
+    width: 50%;
+    float: left;
+    position: relative;
+}
+
 #quizClock {
     font-size:1.5rem;
     font-family: digitalClock;
-    display: inline-block;
+    text-align: center;
+    float: left;
+    width: 50%;
 }
 
 h1 {
     text-align: center;
-}
-
-#showHighScores {
-    display: inline-block;
 }
 
 table {
@@ -55,4 +60,8 @@ button {
 .answer {
     margin: 8px;
     font-size: 1rem;
+}
+
+footer {
+    align-content: center;
 }
