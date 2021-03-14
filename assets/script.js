@@ -26,6 +26,31 @@ var arrQuestions = [
         question: "<code>if (\"0\" === 0) then</code><br><br>The above condition evaluates as?",
         answers: ["True", "False"],
         correctAnswerIndex: 1
+    },
+    {
+        question: "Commonly used data types DO NOT include:",
+        answers: ["strings", "booleans", "alerts", "functions"],
+        correctAnswerIndex: 2
+    },
+    {
+        question: "The condition in an if / else statement is enclosed within:",
+        answers: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+        correctAnswerIndex: 2
+    },
+    {
+        question: "Arrays in JavaScript can be used to store:",
+        answers: ["numbers and strings", "other arrays", "booleans", "all of the above"],
+        correctAnswerIndex: 3
+    },
+    {
+        question: "String values must be enclosed within ______ when being assigned to variables.",
+        answers: ["commas", "curly brackets", "quotes", "parenthesis"],
+        correctAnswerIndex: 3
+    },
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        answers: ["JavaScript", "terminal / bash", "for loops", "console.log()"],
+        correctAnswerIndex: 3
     }
 ];
 
