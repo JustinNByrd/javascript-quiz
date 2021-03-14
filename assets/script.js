@@ -4,8 +4,11 @@ var questionsEl = $("#questions");
 var resultEl = $("#result");
 var introEl = $('#intro');
 var startGameButtonEl = $("#startGame");
+var showHighScoresEl = $("#showHighScores");
 var currentQuestion = 0;
 var timerInterval;
+
+// quiz questions
 var arrQuestions = [
     {
         question: "<code>var i = 56;</code><br><br>What type of variable is i?",
@@ -45,7 +48,7 @@ var arrQuestions = [
     {
         question: "String values must be enclosed within ______ when being assigned to variables.",
         answers: ["commas", "curly brackets", "quotes", "parenthesis"],
-        correctAnswerIndex: 3
+        correctAnswerIndex: 2
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
@@ -56,7 +59,9 @@ var arrQuestions = [
 
 showTime();
 
+// begin quiz code ran on Start Game / Play Again button
 function playGame() {
+    showHighScoresEl.attr("disabled", "true");
     startGameButtonEl.hide();
     introEl.hide();
     quizClock = 60;
@@ -65,6 +70,7 @@ function playGame() {
     showQuestion();
 }
 
+// Display time on clock with pad for values < 10
 function showTime() {
     if (quizClock <= 9)
         timerEl.text(":0" + quizClock);
@@ -72,6 +78,7 @@ function showTime() {
         timerEl.text(":" + quizClock);
 }
 
+// show the next question and increment currentQuestion index
 function showQuestion() {
     resultEl.html("");
     questionsEl.html("<br>" + arrQuestions[currentQuestion].question + "<br><br>");
@@ -84,6 +91,7 @@ function showQuestion() {
     currentQuestion++;
 }
 
+// check the user's answer and display result.  Dock time for incorrect answer
 questionsEl.on("click", ".answer", function (event) {
     var userAnswer = $(event.target);
     userAnswer.attr("disabled", "true");
@@ -101,13 +109,14 @@ questionsEl.on("click", ".answer", function (event) {
         showTime();
     }
 
-    // Increment currentQuestion index and either end game or show next question
+    // Check for end of quiz and call appropriate function after a delay
     if (currentQuestion == arrQuestions.length)
         setTimeout(endGame, 500);
     else
         setTimeout(showQuestion, 500);
 });
 
+// setup timer and end game when/if time runs out
 function quizTimer() {
     timerInterval = setInterval(function () {
         quizClock--;
@@ -117,7 +126,9 @@ function quizTimer() {
     }, 1000);
 }
 
+// End quiz and ask user for initials to store with results
 function endGame() {
+    showHighScoresEl.attr("disabled", "false");
     clearInterval(timerInterval);
     resultEl.html("");
     questionsEl.html(`<h2>Game Over</h2><h3>Your Score: ${quizClock}</h3>`);
@@ -127,6 +138,7 @@ function endGame() {
     startGameButtonEl.show();
 }
 
+// store results
 function saveHighScore() {
     var userInitialsEl = $("#initials");
     var currentDateObj = new Date();
@@ -136,17 +148,23 @@ function saveHighScore() {
         "score" : quizClock,
         "date" : currentDate
     }
+
+    // find the next key value on localStorage
     var arrScores = [];
     var highestKey = 1;
     while (localStorage.getItem(parseInt(highestKey)) != null) {
         console.log(localStorage.getItem(highestKey));
         highestKey++;
     }
+
     var scoreString = JSON.stringify(scoreObj);
     localStorage.setItem(highestKey.toString(), scoreString);
+
+    // now that the result is stored, show score history
     showHighScores();
 }
 
+// display result history in table sorted by descending score
 function showHighScores() {
     questionsEl.html("");
     resultEl.html("");
@@ -193,6 +211,7 @@ function showHighScores() {
     questionsEl.append('<button onClick="clearScores();">Clear Scores</button><br><br>');
 }
 
+// clear score history from localStorage
 function clearScores() {
     localStorage.clear();
     showHighScores();
